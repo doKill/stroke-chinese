@@ -1,16 +1,14 @@
 let app = require("express")(),
-    cheerio = require("cheerio"),
-    Iconv = require("iconv-lite"),
     request = require("request"),
     async = require("async"),
     querystring = require("querystring"),
+    fs = require("fs"),
     hanzi = require('./dict');
-
 
 let configs = (arr) => {
     let options = [];
     for (let i in arr) {
-        let _obj = { xx: '', uni: arr[i], screenWidth: '300', bias: 'Simplified' },
+        let _obj = { xx: '', uni: arr[i], screenWidth: '500', bias: 'Simplified' },
             option = {
                 method: 'post',
                 timeout: 8000,
@@ -29,25 +27,23 @@ let configs = (arr) => {
 
 let fetch = (option, cb) => {
     request.post(option, (err, response, body) => {
-        if (response && response.statusCode == 200) {
-            let data = {
-                html: body,
-                detail: querystring.parse(option.body)
-            }
-            cb(null, data)
-        } else {
-            console.log(err)
+        let data = {
+            html: body,
+            detail: querystring.parse(option.body)
         }
+        cb(null, data)
     })
 }
 
 
-app.get('/', (req, res) => {
-    let params = configs(hanzi)
-    async.mapLimit(params, 5, (option, cb) => {
-        fetch(option, cb);
-    }, (err, result) => {
-        res.send(result)
+let params = configs(hanzi)
+async.mapLimit(params, 5, (option, cb) => {
+    fetch(option, cb);
+}, (err, result) => {
+    result = JSON.stringify(result)
+    let options = { encoding: 'utf8', mode: 438, flag: 'w' };
+    fs.writeFile('./data.txt', result, options, (err) => {
+        if (err) console.log(err)
     })
 })
 
