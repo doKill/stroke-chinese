@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        padding-top: 20px;
+    }
+    #box {
+        background: white;
+        clear: both;
+        border: 1px solid black;
+        width: 500px;
+        height: 500px;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <input type="text" style="text-align: center;width: 100%;padding-left: 5px;" id="input" size="1" maxlength="1" value="我" />
+            </div>
+            <div class="panel-body">
+                <div id="box"></div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" id="init" class="btn btn-block btn-default">动起来</button>
+                <button type="button" id="draw" class="btn btn-block btn-default">让我来</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="js/hanzi-writer.js"></script>
+    <script type="text/javascript">
+        var writer;
+        var isCharVisible;
+        var isOutlineVisible;
+
+        function updateCharacter() {
+            $('#box').html('');
+
+            var pix = Math.min(500,$(window).width()-80);
+            $("#box").css("width",pix).css("height",pix);
+
+            var character = $('#input').val();
+            writer = new HanziWriter('box', character, {
+
+                width: pix,
+                height: pix,
+
+                showOutline: true, // show a faded outline of the character
+                showCharacter: true, // whether or not to draw the completed character
+
+                strokeAnimationDuration: 500, // duration of each stroke in ms
+                delayBetweenStrokes: 800, // delay between drawing subsequent strokes in ms
+            });
+            isCharVisible = true;
+            isOutlineVisible = true;
+            window.writer = writer;
+        }
+
+        window.onload = function() {
+            updateCharacter();
+            
+            $('#init').click(function(){
+                if($('#input').val()){
+                    updateCharacter();
+                    writer.animateCharacter();
+                } else {
+                    alert('没有内容~')
+                }
+            });
+
+            $('#draw').click(function(){
+                writer.quiz({ showOutline: true });
+            });
+
+        }
+    </script>
+</body>
+
+</html>

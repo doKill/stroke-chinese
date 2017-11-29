@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<style>
+		canvas{display:block;margin: 0 auto;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" >本browser不支持canvas,请换个高级的再来~</canvas>
+
+	<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+	<script type="text/javascript">
+
+
+		var cWidth = Math.min(800,$(window).width()-50),
+			cHeight = cWidth;
+
+		var isMouseDown = false,
+			lastLoc = {x:0,y:0};
+
+		var canvas = document.getElementById("canvas"),
+			context = canvas.getContext("2d");
+
+		canvas.width = cWidth;
+		canvas.height = cHeight;
+		initBasic();
+
+
+		canvas.onmousedown = function(e){
+			e.preventDefault()
+			isMouseDown = true
+			lastLoc = winToCanvas(e.clientX,e.clientY)
+		}
+		canvas.onmouseout = function(e){
+			e.preventDefault()
+			isMouseDown = false
+		}
+		canvas.onmouseup = function(e){
+			e.preventDefault()
+			isMouseDown = false
+		}
+		canvas.onmousemove = function(e){
+			e.preventDefault()
+			if(isMouseDown){
+				var curLoc = winToCanvas(e.clientX,e.clientY)
+
+				context.beginPath()
+				context.moveTo(lastLoc.x,lastLoc.y)
+				context.lineTo(curLoc.x,curLoc.y)
+
+				context.strokeStyle = "red"
+				context.lineCap = "round"
+				context.lineJoin = "round"
+				context.lineWidth = 5
+
+				context.stroke()
+
+				lastLoc = curLoc;
+			}
+		}
+
+
+		canvas.addEventListener('touchstart',function(e){
+			isMouseDown = true
+			e.preventDefault()
+			touch = e.touches[0]
+			lastLoc = winToCanvas(touch.pageX,touch.pageY)
+		});
+		canvas.addEventListener('touchup',function(e){
+			e.preventDefault()
+			isMouseDown = false
+		});
+		canvas.addEventListener('touchmove',function(e){
+			e.preventDefault()
+			touch = e.touches[0]
+			if(isMouseDown){
+				var curLoc = winToCanvas(touch.pageX,touch.pageY)
+
+				context.beginPath()
+				context.moveTo(lastLoc.x,lastLoc.y)
+				context.lineTo(curLoc.x,curLoc.y)
+
+				context.strokeStyle = "red"
+				context.lineCap = "round"
+				context.lineJoin = "round"
+				context.lineWidth = 5
+
+				context.stroke()
+
+				lastLoc = curLoc;
+			}
+		});
+
+
+		function winToCanvas(x,y){
+			var box = canvas.getBoundingClientRect()
+			return {x:x-box.left , y:y-box.top}
+		}
+
+		function initBasic(){
+			context.save()
+
+			context.strokeStyle = "rgb(230,150,9)"
+
+			context.beginPath()
+			context.moveTo( 3 , 3 )
+			context.lineTo( cWidth - 3 , 3 )
+			context.lineTo( cWidth - 3 , cHeight - 3 )
+			context.lineTo( 3 , cHeight - 3 )
+			context.closePath()
+			context.lineWidth = 6
+			context.stroke()
+
+			context.beginPath()
+			context.moveTo(0,0)
+			context.lineTo(cWidth,cHeight)
+
+			context.moveTo(cWidth,0)
+			context.lineTo(0,cHeight)
+
+			context.moveTo(cWidth/2,0)
+			context.lineTo(cWidth/2,cHeight)
+
+			context.moveTo(0,cHeight/2)
+			context.lineTo(cWidth,cHeight/2)
+
+			context.font = cWidth*3/5 + "px 雅黑"
+			context.textAlign = "center"
+			context.textBaseline = "middle"
+			context.fillStyle = "#ddd"
+			context.fillText('好',cWidth/2,cHeight/2,cWidth)
+
+			context.lineWidth = 1
+			context.stroke()
+
+			context.restore()
+		}
+	</script>
+</body>
+</html>
