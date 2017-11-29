@@ -1,3 +1,4 @@
 node_modules/
 .vscode/
 *.txt
+!备注.txt
