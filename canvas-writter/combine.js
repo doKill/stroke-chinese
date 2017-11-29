@@ -15,6 +15,7 @@ window.CharAnimate = function(e, c) {
         this.f.j()
     }
 };
+
 function q(e, c) {
     function d(b) {
         m("eStroke");
@@ -24,21 +25,20 @@ function q(e, c) {
         a.parse(b.s[b.q]);
         b.f.i("eStroke");
         b.f.o("eStroke", a);
-        b.b = setTimeout(function() {
-            f(b)
-        },
-        10)
+        b.b = setTimeout(function() { f(b) }, 10)
     }
-    function f(b) { ! b.f || !b.f.r() ? (++b.q, b.b = b.q >= b.s.length ? 0 : setTimeout(function() {
-            animTimer = setTimeout(function() {
-                d(b)
+
+    function f(b) {
+        !b.f || !b.f.r() ? (++b.q, b.b = b.q >= b.s.length ? 0 : setTimeout(function() {
+                animTimer = setTimeout(function() {
+                        d(b)
+                    },
+                    500)
             },
-            500)
-        },
-        500)) : b.b = setTimeout(function() {
-            f(b)
-        },
-        10)
+            500)) : b.b = setTimeout(function() {
+                f(b)
+            },
+            10)
     }
     r && r.j();
     r = this;
@@ -66,6 +66,7 @@ window.newContour = function(e, c) {
     cvec.i("eStroke");
     cvec.o("eStroke", d)
 };
+
 function m(e) {
     e = document.getElementById(e);
     var c = e.getContext("2d");
@@ -89,35 +90,40 @@ window.finalize = function(e) {
 window.isAnimating = function(e) {
     return e.r()
 };
+
 function u(e, c, d) {
     this.x = e;
     this.y = c;
     this.p = d
 }
+
 function v() {
     function e(b, a) {
         a.a > a.n ? a.b = 0 : (b.putImageData(a.m, a.c, a.d), a.a += eval(speed), b.save(), b.beginPath(), b.rect(a.g, a.d, a.a - a.g, a.l - a.d), b.clip(), b.beginPath(), a.i(b), b.fill(), b.restore(), a.b = setTimeout(function() {
-            e(b, a)
-        },
-        20))
+                e(b, a)
+            },
+            20))
     }
+
     function c(b, a) {
         a.a > a.n ? a.b = 0 : (b.putImageData(a.m, a.c, a.d), a.a += eval(speed), b.save(), b.beginPath(), b.rect(a.c, a.g, a.k - a.c, a.a - a.g), b.clip(), b.beginPath(), a.i(b), b.fill(), b.restore(), a.b = setTimeout(function() {
-            c(b, a)
-        },
-        20))
+                c(b, a)
+            },
+            20))
     }
+
     function d(b, a) {
         a.a < a.n ? a.b = 0 : (b.putImageData(a.m, a.c, a.d), a.a -= eval(speed), b.save(), b.beginPath(), b.rect(a.a, a.d, a.g - a.a, a.l - a.d), b.clip(), b.beginPath(), a.i(b), b.fill(), b.restore(), a.b = setTimeout(function() {
-            d(b, a)
-        },
-        20))
+                d(b, a)
+            },
+            20))
     }
+
     function f(b, a) {
         a.a < a.n ? a.b = 0 : (b.putImageData(a.m, a.c, a.d), a.a -= eval(speed), b.save(), b.beginPath(), b.rect(a.c, a.a, a.k - a.c, a.g - a.a), b.clip(), b.beginPath(), a.i(b), b.fill(), b.restore(), a.b = setTimeout(function() {
-            f(b, a)
-        },
-        20))
+                f(b, a)
+            },
+            20))
     }
     this.c = 1E4;
     this.k = 0;
@@ -143,50 +149,50 @@ function v() {
     this.o = function(b, a) {
         this.m = b.getImageData(this.c, this.d, this.k - this.c, this.l - this.d);
         switch (a & 3) {
-        case 0:
-            this.g = this.c;
-            this.n = this.k;
-            this.a = this.g;
-            e(b, this);
-            break;
-        case 1:
-            this.g = this.d;
-            this.n = this.l;
-            this.a = this.g;
-            c(b, this);
-            break;
-        case 2:
-            this.g = this.k;
-            this.n = this.c;
-            this.a = this.g;
-            d(b, this);
-            break;
-        case 3:
-            this.g = this.l,
-            this.n = this.d,
-            this.a = this.g,
-            f(b, this)
+            case 0:
+                this.g = this.c;
+                this.n = this.k;
+                this.a = this.g;
+                e(b, this);
+                break;
+            case 1:
+                this.g = this.d;
+                this.n = this.l;
+                this.a = this.g;
+                c(b, this);
+                break;
+            case 2:
+                this.g = this.k;
+                this.n = this.c;
+                this.a = this.g;
+                d(b, this);
+                break;
+            case 3:
+                this.g = this.l,
+                    this.n = this.d,
+                    this.a = this.g,
+                    f(b, this)
         }
     };
     this.i = function(b) {
         var a = this.w,
-        c = !1,
-        d;
+            c = !1,
+            d;
         if (a[0].p) d = a[0];
         else if (a[1].p) {
             var e = (a[0].x + a[1].x) / 2,
-            f = (a[0].y + a[1].y) / 2;
+                f = (a[0].y + a[1].y) / 2;
             d = new u(e, f, 1)
         } else d = a[0];
         for (var e = d.x,
-        f = d.y,
-        j = a.length,
-        h = 1; h <= j; ++h) {
+                f = d.y,
+                j = a.length,
+                h = 1; h <= j; ++h) {
             var s = a[h % j].x,
-            t = a[h % j].y;
+                t = a[h % j].y;
             if (a[h % j].p) {
                 if (1 < h || 1 == h && a[0].p) c ? b.lineTo(e, f) : (b.moveTo(e, f), c = !0),
-                b.lineTo(s, t);
+                    b.lineTo(s, t);
                 e = s;
                 f = t;
                 d = a[h % j]
@@ -201,27 +207,28 @@ function v() {
         return d
     }
 }
+
 function n() {
     function e(c, d, f) {
-        if ( - 1 == d.a || !d.h[d.a].r()) {
+        if (-1 == d.a || !d.h[d.a].r()) {
             if (0 <= d.a && !(d.a < f.e.length && f.e[d.a + 1] & 128) && transientColor.length && !d.t) {
                 d.b = setTimeout(function() {
-                    d.t = !0;
-                    var a = f.F(f.A(d.a));
-                    if (0 <= a) {
-                        for (var b = a; b <= d.a; ++b) d.h[b].D(c);
-                        for (b = a; b <= d.a; ++b) c.save(),
-                        c.beginPath(),
-                        d.h[b].i(c),
-                        a = strokeColor,
-                        f.z(b) && (a = radicalColor),
-                        c.fillStyle = a,
-                        c.fill(),
-                        c.restore()
-                    }
-                    e(c, d, f)
-                },
-                200);
+                        d.t = !0;
+                        var a = f.F(f.A(d.a));
+                        if (0 <= a) {
+                            for (var b = a; b <= d.a; ++b) d.h[b].D(c);
+                            for (b = a; b <= d.a; ++b) c.save(),
+                                c.beginPath(),
+                                d.h[b].i(c),
+                                a = strokeColor,
+                                f.z(b) && (a = radicalColor),
+                                c.fillStyle = a,
+                                c.fill(),
+                                c.restore()
+                        }
+                        e(c, d, f)
+                    },
+                    200);
                 return
             }
             if (++d.a < f.e.length) {
@@ -233,13 +240,13 @@ function n() {
                 if (b & 128) d.h[d.a].o(c, b);
                 else {
                     d.b = setTimeout(function() {
-                        d.h[d.a].o(c, f.e[d.a]);
-                        d.b = setTimeout(function() {
-                            e(c, d, f)
+                            d.h[d.a].o(c, f.e[d.a]);
+                            d.b = setTimeout(function() {
+                                    e(c, d, f)
+                                },
+                                10)
                         },
-                        10)
-                    },
-                    500);
+                        500);
                     return
                 }
             } else {
@@ -248,9 +255,9 @@ function n() {
             }
         }
         d.b = setTimeout(function() {
-            e(c, d, f)
-        },
-        10)
+                e(c, d, f)
+            },
+            10)
     }
     this.h = [];
     this.add = function(c) {
@@ -258,7 +265,7 @@ function n() {
     };
     this.B = function(c) {
         for (var d = c.length,
-        e = Math.floor(d / 3), b = "", a = 0; a < c.length; ++a) {
+                e = Math.floor(d / 3), b = "", a = 0; a < c.length; ++a) {
             var g = a - e;
             0 > g && (g += d);
             b = b.concat(String.fromCharCode(c.charCodeAt(g) ^ "Copyright EON Media Limited 1999-2006 - http://www.eon.com.hk, Unit C, 13/F Skyview Cliff, 49 Conduit Road MidLevels Hong Kong. All Rights Reserved".charCodeAt(g % 147) & 15))
@@ -276,20 +283,21 @@ function n() {
         c = this.B(c);
         for (var d = 2; d < c.length;) {
             for (var e = new v,
-            b = parseInt(c.substr(d, 3), 10), d = d + 3, a = 0; a < b; ++a) {
+                    b = parseInt(c.substr(d, 3), 10), d = d + 3, a = 0; a < b; ++a) {
                 var g = parseInt(c.substr(d, 4), 16),
-                g = g ^ 62953;
+                    g = g ^ 62953;
                 32267 < g && (g -= 65536);
                 this.c > g && (this.c = g);
                 this.k < g && (this.k = g);
                 var d = d + 4,
-                k = parseInt(c.substr(d, 4), 16),
-                k = k ^ 10935;
+                    k = parseInt(c.substr(d, 4), 16),
+                    k = k ^ 10935;
                 32267 < k && (k -= 65536);
                 this.d > k && (this.d = k);
                 this.l < k && (this.l = k);
                 d += 4;
-                e.add(new u(g, k, "1" == c.charAt(d))); ++d
+                e.add(new u(g, k, "1" == c.charAt(d)));
+                ++d
             }
             this.add(e)
         }
@@ -314,23 +322,28 @@ function n() {
         for (var c = 0; c < this.h.length; ++c) this.h[c].j()
     }
 };
+
 function p() {
     this.e = [];
     this.parse = function(e) {
         for (var c = 0; c < e.length; c += 2) this.e.push(parseInt(e.substr(c, 2), 16) & 255)
     };
     this.F = function(e) {
-        for (var c = 0; c < this.e.length; ++c) if (! (this.e[c] & 128)) {
-            if (0 == e) return c; --e
-        }
-        return - 1
+        for (var c = 0; c < this.e.length; ++c)
+            if (!(this.e[c] & 128)) {
+                if (0 == e) return c;
+                --e
+            }
+        return -1
     };
     this.C = function(e) {
         for (var c = !1,
-        d = 0; d < this.e.length; ++d) if (! (this.e[d] & 128)) {
-            c = this.e[d] & 64;
-            if (0 == e) break; --e
-        }
+                d = 0; d < this.e.length; ++d)
+            if (!(this.e[d] & 128)) {
+                c = this.e[d] & 64;
+                if (0 == e) break;
+                --e
+            }
         return c
     };
     this.z = function(e) {
@@ -338,7 +351,7 @@ function p() {
     };
     this.A = function(e) {
         for (var c = -1,
-        d = 0; d <= e; ++d) this.e[d] & 128 || ++c;
+                d = 0; d <= e; ++d) this.e[d] & 128 || ++c;
         return c
     }
 };
